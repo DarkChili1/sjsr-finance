@@ -8,679 +8,125 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink: #1a1a2e;
-  --paper: #faf9f6;
-  --accent: #c0392b;
-  --accent2: #2c3e50;
-  --gold: #d4a853;
-  --green: #1a7a4c;
-  --muted: #8b8680;
-  --light: #f0eeea;
-  --border: #d5d0c8;
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'DM Sans', -apple-system, sans-serif;
-  --mono: 'JetBrains Mono', monospace;
-}
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body { font-family: var(--sans); color: var(--ink); background: var(--paper); line-height: 1.7; -webkit-font-smoothing: antialiased; }
-
-/* === GRAIN OVERLAY === */
-body::before {
-  content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 9999; opacity: 0.4;
-}
-
-/* === NAV === */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(250,249,246,0.92); backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border); padding: 0 2rem;
-  transition: transform 0.3s ease;
-}
-nav .nav-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 56px; }
-nav .logo { font-family: var(--serif); font-weight: 700; font-size: 1.1rem; color: var(--accent); letter-spacing: -0.02em; text-decoration: none; }
-nav .logo span { color: var(--accent2); }
-nav .nav-links { display: flex; gap: 1.5rem; align-items: center; }
-nav .nav-links a { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; transition: color 0.2s; }
-nav .nav-links a:hover { color: var(--accent); }
-.menu-btn { display: none; background: none; border: none; cursor: pointer; padding: 8px; }
-.menu-btn svg { width: 24px; height: 24px; stroke: var(--ink); }
-
-/* === HERO === */
-.hero {
-  min-height: 100vh; display: flex; align-items: center; justify-content: center;
-  padding: 8rem 2rem 4rem; position: relative; overflow: hidden;
-  background: linear-gradient(160deg, var(--paper) 0%, #eae6df 50%, #d8d2c8 100%);
-}
-.hero::after {
-  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px;
-  background: linear-gradient(to top, var(--paper), transparent);
-}
-.hero-content { max-width: 800px; text-align: center; position: relative; z-index: 1; }
-.hero-label {
-  display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.2em; color: var(--accent); border: 1.5px solid var(--accent);
-  padding: 0.4em 1.2em; margin-bottom: 2rem;
-  animation: fadeInUp 0.8s ease both;
-}
-.hero h1 {
-  font-family: var(--serif); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 700;
-  line-height: 1.1; color: var(--ink); margin-bottom: 1.5rem; letter-spacing: -0.03em;
-  animation: fadeInUp 0.8s ease 0.15s both;
-}
-.hero h1 em { font-style: italic; color: var(--accent); }
-.hero .subtitle {
-  font-size: 1.15rem; color: var(--muted); max-width: 600px; margin: 0 auto 2.5rem;
-  animation: fadeInUp 0.8s ease 0.3s both;
-}
-.hero .cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; animation: fadeInUp 0.8s ease 0.45s both; }
-.btn {
-  display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.85em 2em;
-  font-family: var(--sans); font-size: 0.85rem; font-weight: 600; text-decoration: none;
-  border-radius: 3px; transition: all 0.25s ease; cursor: pointer; border: none;
-}
-.btn-primary { background: var(--accent); color: white; }
-.btn-primary:hover { background: #a83226; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(192,57,43,0.3); }
-.btn-outline { background: transparent; color: var(--accent2); border: 1.5px solid var(--accent2); }
-.btn-outline:hover { background: var(--accent2); color: white; }
-
-/* === SECTIONS === */
-section { padding: 5rem 2rem; }
-.container { max-width: 900px; margin: 0 auto; }
-.wide { max-width: 1100px; }
-
-.section-label {
-  font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em;
-  color: var(--accent); margin-bottom: 0.5rem;
-}
-h2 {
-  font-family: var(--serif); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700;
-  line-height: 1.15; color: var(--ink); margin-bottom: 1rem; letter-spacing: -0.02em;
-}
-h3 {
-  font-family: var(--serif); font-size: 1.5rem; font-weight: 600;
-  color: var(--ink); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
-}
-p { margin-bottom: 1rem; color: #444; }
-p strong { color: var(--ink); }
-
-/* === STAT CARDS === */
-.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
-.stat-card {
-  padding: 1.5rem; border: 1px solid var(--border); border-radius: 4px;
-  background: white; position: relative; overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.06); }
-.stat-card.red { border-left: 4px solid var(--accent); }
-.stat-card.green { border-left: 4px solid var(--green); }
-.stat-card.gold { border-left: 4px solid var(--gold); }
-.stat-number { font-family: var(--mono); font-size: 2rem; font-weight: 500; color: var(--ink); line-height: 1.1; }
-.stat-card.red .stat-number { color: var(--accent); }
-.stat-card.green .stat-number { color: var(--green); }
-.stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; line-height: 1.4; }
-
-/* === DATA TABLES === */
-.table-wrap { overflow-x: auto; margin: 1.5rem 0; border: 1px solid var(--border); border-radius: 4px; }
-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-thead th {
-  background: var(--accent2); color: white; padding: 0.7rem 0.8rem;
-  text-align: left; font-weight: 600; font-size: 0.75rem; text-transform: uppercase;
-  letter-spacing: 0.05em; white-space: nowrap;
-}
-tbody td { padding: 0.6rem 0.8rem; border-bottom: 1px solid var(--light); }
-tbody tr:hover { background: rgba(0,0,0,0.015); }
-.num { text-align: right; font-family: var(--mono); font-size: 0.82rem; }
-.red-text { color: var(--accent); font-weight: 600; }
-.green-text { color: var(--green); font-weight: 600; }
-
-/* === ALERT BOXES === */
-.alert {
-  padding: 1.2rem 1.5rem; margin: 1.5rem 0; border-radius: 4px;
-  border-left: 4px solid; font-size: 0.9rem;
-}
-.alert-red { background: #fef2f2; border-color: var(--accent); color: #7f1d1d; }
-.alert-green { background: #f0fdf4; border-color: var(--green); color: #14532d; }
-.alert-blue { background: #eff6ff; border-color: #3b82f6; color: #1e3a5f; }
-.alert strong { display: block; margin-bottom: 0.3rem; }
-
-/* === FLAG CARDS === */
-.flag-card {
-  padding: 2rem; margin: 1.5rem 0; background: white; border: 1px solid var(--border);
-  border-radius: 4px; position: relative;
-}
-.flag-card::before {
-  content: attr(data-flag); position: absolute; top: -12px; left: 20px;
-  background: var(--accent); color: white; font-size: 0.7rem; font-weight: 700;
-  padding: 0.3em 0.8em; border-radius: 2px; text-transform: uppercase; letter-spacing: 0.1em;
-}
-.flag-card h3 { margin-top: 0.5rem; }
-
-/* === MEASURE CARDS === */
-.measure {
-  padding: 2rem; margin: 1.5rem 0; background: white; border: 1px solid var(--border);
-  border-radius: 4px; display: grid; grid-template-columns: 3fr 1fr; gap: 1.5rem;
-}
-.measure-meta { text-align: right; display: flex; flex-direction: column; justify-content: center; gap: 0.5rem; }
-.measure-amount { font-family: var(--mono); font-size: 1.8rem; font-weight: 500; color: var(--green); line-height: 1; }
-.measure-impact { font-size: 0.75rem; color: var(--muted); }
-.difficulty { display: inline-block; font-size: 0.7rem; font-weight: 600; padding: 0.2em 0.6em; border-radius: 2px; }
-.diff-low { background: #d1fae5; color: #065f46; }
-.diff-med { background: #fef3c7; color: #92400e; }
-.diff-high { background: #fee2e2; color: #991b1b; }
-
-/* === GOOD THINGS === */
-.good-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-.good-card {
-  padding: 1.5rem; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 4px;
-}
-.good-card h4 { font-family: var(--serif); font-size: 1.1rem; color: #14532d; margin-bottom: 0.5rem; }
-.good-card p { font-size: 0.85rem; color: #166534; margin: 0; }
-
-/* === FOOTER === */
-footer {
-  padding: 3rem 2rem; background: var(--ink); color: rgba(255,255,255,0.5);
-  font-size: 0.8rem; text-align: center;
-}
-footer a { color: var(--gold); text-decoration: none; }
-
-/* === SEPARATOR === */
-.sep { border: none; border-top: 1px solid var(--border); margin: 3rem 0; }
-.divider-accent { height: 3px; background: var(--accent); width: 60px; margin: 1rem 0 2rem; border: none; }
-
-/* === ANIMATIONS === */
-@keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-/* === RESPONSIVE === */
-@media (max-width: 768px) {
-  nav .nav-links { display: none; }
-  .menu-btn { display: block; }
-  nav .nav-links.open {
-    display: flex; flex-direction: column; position: absolute;
-    top: 56px; left: 0; right: 0; background: var(--paper);
-    padding: 1rem 2rem; border-bottom: 1px solid var(--border); gap: 0.8rem;
-  }
-  .measure { grid-template-columns: 1fr; }
-  .measure-meta { text-align: left; flex-direction: row; flex-wrap: wrap; }
-  section { padding: 3rem 1.2rem; }
-}
+:root{--ink:#1a1a2e;--paper:#faf9f6;--accent:#c0392b;--accent2:#2c3e50;--gold:#d4a853;--green:#1a7a4c;--muted:#8b8680;--light:#f0eeea;--border:#d5d0c8;--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans',-apple-system,sans-serif;--mono:'JetBrains Mono',monospace}*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;font-size:16px}body{font-family:var(--sans);color:var(--ink);background:var(--paper);line-height:1.7;-webkit-font-smoothing:antialiased}body::before{content:'';position:fixed;top:0;left:0;width:100%;height:100%;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.4}nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,249,246,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 2rem;transition:transform .3s}nav .ni{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:56px}nav .logo{font-family:var(--serif);font-weight:700;font-size:1.1rem;color:var(--accent);letter-spacing:-.02em;text-decoration:none}nav .logo span{color:var(--accent2)}nav .nl{display:flex;gap:1.5rem;align-items:center}nav .nl a{font-size:.78rem;font-weight:600;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:.08em;transition:color .2s}nav .nl a:hover{color:var(--accent)}.mb{display:none;background:none;border:none;cursor:pointer;padding:8px}.mb svg{width:24px;height:24px;stroke:var(--ink)}.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8rem 2rem 4rem;position:relative;overflow:hidden;background:linear-gradient(160deg,var(--paper) 0%,#eae6df 50%,#d8d2c8 100%)}.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,var(--paper),transparent)}.hc{max-width:850px;text-align:center;position:relative;z-index:1}.hl{display:inline-block;font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--accent);border:1.5px solid var(--accent);padding:.4em 1.2em;margin-bottom:2rem;animation:fu .8s ease both}.hero h1{font-family:var(--serif);font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;line-height:1.1;color:var(--ink);margin-bottom:1.5rem;letter-spacing:-.03em;animation:fu .8s ease .15s both}.hero h1 em{font-style:italic;color:var(--accent)}.hero .sub{font-size:1.15rem;color:var(--muted);max-width:650px;margin:0 auto 2.5rem;animation:fu .8s ease .3s both}.cr{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fu .8s ease .45s both}.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85em 2em;font-family:var(--sans);font-size:.85rem;font-weight:600;text-decoration:none;border-radius:3px;transition:all .25s;cursor:pointer;border:none}.bp{background:var(--accent);color:#fff}.bp:hover{background:#a83226;transform:translateY(-1px);box-shadow:0 4px 12px rgba(192,57,43,.3)}.bo{background:transparent;color:var(--accent2);border:1.5px solid var(--accent2)}.bo:hover{background:var(--accent2);color:#fff}section{padding:5rem 2rem}.ct{max-width:920px;margin:0 auto}.sl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--accent);margin-bottom:.5rem}h2{font-family:var(--serif);font-size:clamp(2rem,4vw,2.8rem);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:1rem;letter-spacing:-.02em}h3{font-family:var(--serif);font-size:1.5rem;font-weight:600;color:var(--ink);margin:2rem 0 .75rem}p{margin-bottom:1rem;color:#444}p strong{color:var(--ink)}.sm{font-size:.82rem;color:var(--muted);font-style:italic}.sg{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.2rem;margin:2rem 0}.sc{padding:1.5rem;border:1px solid var(--border);border-radius:4px;background:#fff;transition:transform .2s,box-shadow .2s}.sc:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.06)}.sc.r{border-left:4px solid var(--accent)}.sc.g{border-left:4px solid var(--green)}.sc.go{border-left:4px solid var(--gold)}.sn{font-family:var(--mono);font-size:2rem;font-weight:500;line-height:1.1}.sc.r .sn{color:var(--accent)}.sc.g .sn{color:var(--green)}.sla{font-size:.8rem;color:var(--muted);margin-top:.3rem;line-height:1.4}.tw{overflow-x:auto;margin:1.5rem 0;border:1px solid var(--border);border-radius:4px}table{width:100%;border-collapse:collapse;font-size:.85rem}thead th{background:var(--accent2);color:#fff;padding:.7rem .8rem;text-align:left;font-weight:600;font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap}tbody td{padding:.6rem .8rem;border-bottom:1px solid var(--light)}tbody tr:hover{background:rgba(0,0,0,.015)}.n{text-align:right;font-family:var(--mono);font-size:.82rem}.rt{color:var(--accent);font-weight:600}.gt{color:var(--green);font-weight:600}.al{padding:1.2rem 1.5rem;margin:1.5rem 0;border-radius:4px;border-left:4px solid;font-size:.9rem}.ar{background:#fef2f2;border-color:var(--accent);color:#7f1d1d}.ag{background:#f0fdf4;border-color:var(--green);color:#14532d}.al strong{display:block;margin-bottom:.3rem}.fc{padding:2rem;margin:1.5rem 0;background:#fff;border:1px solid var(--border);border-radius:4px}.fb{display:inline-flex;align-items:center;gap:.4rem;background:var(--accent);color:#fff;font-size:.7rem;font-weight:700;padding:.3em .8em;border-radius:2px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}.fco{display:inline-block;background:#fee2e2;color:#991b1b;font-family:var(--mono);font-size:.82rem;font-weight:600;padding:.3em .7em;border-radius:2px;margin-left:.5rem}.ex{background:var(--light);padding:1rem 1.3rem;border-radius:4px;margin:1rem 0;font-size:.88rem;color:#555;border-left:3px solid var(--gold)}.ex strong{color:var(--ink)}.ms{padding:1.8rem;margin:1.2rem 0;background:#fff;border:1px solid var(--border);border-radius:4px}.mh{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;flex-wrap:wrap;margin-bottom:.8rem}.mh h3{margin:0;flex:1;min-width:200px}.mn{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}.ma{font-family:var(--mono);font-size:1.4rem;font-weight:500;color:var(--green);line-height:1;white-space:nowrap}.mp{font-size:.73rem;color:var(--muted);white-space:nowrap}.df{display:inline-block;font-size:.67rem;font-weight:600;padding:.2em .5em;border-radius:2px;white-space:nowrap}.dl{background:#d1fae5;color:#065f46}.dm{background:#fef3c7;color:#92400e}.dh{background:#fee2e2;color:#991b1b}.mw{font-size:.82rem;color:#777;margin-top:.5rem;font-style:italic}.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;margin:2rem 0}.cc{padding:1.5rem;background:#fff;border:1px solid var(--border);border-radius:4px;text-align:center}.ca{font-family:var(--mono);font-size:1.8rem;font-weight:500;color:var(--accent2);margin:.5rem 0}.cl{font-size:.85rem;color:var(--muted)}.ce{font-size:.9rem;color:var(--ink);font-weight:600;margin-top:.8rem;padding-top:.8rem;border-top:1px solid var(--light)}.gg{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:1.5rem 0}.gc{padding:1.5rem;background:#f0fdf4;border:1px solid #bbf7d0;border-radius:4px}.gc h4{font-family:var(--serif);font-size:1.1rem;color:#14532d;margin:0 0 .5rem}.gc p{font-size:.85rem;color:#166534;margin:0}.ib{margin:3rem 0;padding:3rem 2.5rem;background:linear-gradient(135deg,#f0fdf4,#ecfdf5);border:2px solid var(--green);border-radius:8px;text-align:center}.ib h2{color:var(--green)}.is{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin:2rem auto;max-width:750px}.sco{padding:1.5rem;background:#fff;border-radius:6px;border:1px solid #bbf7d0}.scl{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:.3rem}.sca{font-family:var(--mono);font-size:2.5rem;font-weight:500;color:var(--green);line-height:1.1}.scd{font-size:.8rem;color:#555;margin-top:.3rem}.db{margin:2.5rem 0;padding:2.5rem;background:linear-gradient(135deg,#fef2f2,#fff1f2);border:2px solid var(--accent);border-radius:8px}.db h3{font-family:var(--serif);color:var(--accent);margin-top:0;font-size:1.6rem}.dt{margin:2rem 0;padding:2rem;background:#fff7ed;border:2px solid #f59e0b;border-radius:8px;text-align:center}.dt .sn{font-size:2.5rem;color:#b45309}.sep{border:none;border-top:1px solid var(--border);margin:0 auto;max-width:900px}.da{height:3px;background:var(--accent);width:60px;margin:1rem 0 2rem;border:none}footer{padding:3rem 2rem;background:var(--ink);color:rgba(255,255,255,.5);font-size:.8rem;text-align:center}@keyframes fu{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.rv{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}.rv.vi{opacity:1;transform:translateY(0)}@media(max-width:768px){nav .nl{display:none}.mb{display:block}nav .nl.op{display:flex;flex-direction:column;position:absolute;top:56px;left:0;right:0;background:var(--paper);padding:1rem 2rem;border-bottom:1px solid var(--border);gap:.8rem}.mh{flex-direction:column}.mn{justify-content:flex-start}section{padding:3rem 1.2rem}.sca{font-size:2rem}.ib{padding:2rem 1.2rem}}
 </style>
 </head>
 <body>
+<nav><div class="ni"><a href="#" class="logo">SJSR <span>Finances</span></a><div class="nl" id="nv"><a href="#resume">Résumé</a><a href="#diagnostic">Diagnostic</a><a href="#drapeaux">Drapeaux rouges</a><a href="#mensonges">Transparence</a><a href="#fluff">Discutables</a><a href="#bon">Bons côtés</a><a href="#plan">Plan d'action</a></div><button class="mb" onclick="document.getElementById('nv').classList.toggle('op')"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></nav>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-inner">
-    <a href="#" class="logo">SJSR <span>Finances</span></a>
-    <div class="nav-links" id="navLinks">
-      <a href="#diagnostic">Diagnostic</a>
-      <a href="#drapeaux">Drapeaux rouges</a>
-      <a href="#mensonges">Transparence</a>
-      <a href="#fluff">Dépenses discutables</a>
-      <a href="#bon">Bons côtés</a>
-      <a href="#plan">Plan d'action</a>
-    </div>
-    <button class="menu-btn" onclick="document.getElementById('navLinks').classList.toggle('open')">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-    </button>
-  </div>
-</nav>
+<section class="hero"><div class="hc"><div class="hl">Analyse indépendante · Mars 2026</div><h1>Où va l'argent de vos <em>taxes</em>&nbsp;?</h1><p class="sub">Les finances de Saint-Jean-sur-Richelieu passées au crible. Cinq ans de rapports audités, les vrais chiffres, les vraies questions — et un plan pour redonner un répit aux contribuables.</p><div class="cr"><a href="#resume" class="btn bp">Lire le résumé</a><a href="#plan" class="btn bo">Voir le plan de réduction</a></div></div></section>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-content">
-    <div class="hero-label">Analyse indépendante · Mars 2026</div>
-    <h1>Où va l'argent de vos <em>taxes</em>&nbsp;?</h1>
-    <p class="subtitle">Analyse complète des finances de Saint-Jean-sur-Richelieu basée sur les rapports financiers audités 2020-2024. Les vrais chiffres, les vraies questions.</p>
-    <div class="cta-row">
-      <a href="#diagnostic" class="btn btn-primary">Voir le diagnostic</a>
-      <a href="#plan" class="btn btn-outline">Plan de réduction</a>
-    </div>
-  </div>
-</section>
+<section id="resume"><div class="ct"><div class="sl">Résumé exécutif</div><h2>Ce que chaque contribuable doit savoir</h2><hr class="da"><p><strong>Votre compte de taxes est de 3&nbsp;282&nbsp;$ en 2025</strong> — et il grimpe de 3 à 4&nbsp;% chaque année. Si rien ne change, il atteindra <strong>3&nbsp;700 à 3&nbsp;800&nbsp;$</strong> d'ici 2028. Ce rapport explique pourquoi, et surtout, ce qu'on peut faire pour l'arrêter.</p><p>Entre 2020 et 2024, les dépenses de la Ville ont augmenté de <strong>36,8&nbsp;%</strong>. Pendant ce temps, l'inflation au Québec (l'IPC — l'indice des prix à la consommation, qui mesure combien coûte la vie en général : nourriture, logement, transport, etc.) n'a été que de <strong>18,5&nbsp;%</strong>. Et la population ? <strong>+1,8&nbsp;%</strong>. La Ville dépense deux fois plus vite que l'inflation pour servir essentiellement le même nombre de personnes.</p><p>Cet écart de ~18 points représente environ <strong>24&nbsp;M$ par année</strong> de dépenses qui ne devraient pas exister. C'est <strong>559&nbsp;$ par ménage</strong> qui part chaque année — pas dans les routes ou l'eau potable, mais dans une bureaucratie qui grossit (+60,7&nbsp;%), des effectifs qui gonflent (+114 employés en 3 ans), une dette qui s'emballe (+100&nbsp;M$ en 4 ans), des subventions opaques à des organismes dont vous ne connaissez même pas le nom, et une stratégie « carboneutre et inclusive » financée par vos taxes.</p><h3>Les 5 constats clés</h3><div class="sg"><div class="sc r"><div class="sn">+60,7%</div><div class="sla">Administration générale en 4 ans — trois fois l'inflation. La bureaucratie qui s'alimente elle-même.</div></div><div class="sc r"><div class="sn">100 M$</div><div class="sla">De nouvelle dette en 4 ans. Le service de la dette approche le seuil d'alerte de 15&nbsp;% du budget.</div></div><div class="sc r"><div class="sn">+114</div><div class="sla">Employés ajoutés en 3 ans (+15&nbsp;%) pour +1,8&nbsp;% de population. La masse salariale frôle les 100&nbsp;M$.</div></div><div class="sc r"><div class="sn">~17 M$</div><div class="sla">En dépenses discutables : stratégie « carboneutre », transferts opaques, itinérance, embellissement urbain.</div></div><div class="sc go"><div class="sn">20-30 M$</div><div class="sla">D'économies réalisables par année, sans toucher aux services essentiels. Soit 466 à 699&nbsp;$ de moins par ménage.</div></div></div><p>Le nouveau maire Éric Latour, élu en novembre 2025, a déclaré lors du budget 2026 : <em>« Nos revenus ne suivent plus la hausse de nos dépenses et nous devons recentrer progressivement l'action municipale sur l'essentiel. »</em> Cette analyse fournit la feuille de route pour y arriver.</p></div></section>
 
-<!-- DIAGNOSTIC -->
-<section id="diagnostic">
-  <div class="container">
-    <div class="section-label">Le portrait global</div>
-    <h2>Les dépenses croissent deux fois plus vite que l'inflation</h2>
-    <hr class="divider-accent">
-    <p>Entre 2020 et 2024, les dépenses de la Ville ont augmenté de <strong>36,8&nbsp;%</strong> alors que l'inflation cumulée au Québec n'a été que de <strong>18,5&nbsp;%</strong> et que la population n'a pratiquement pas bougé (<strong>+1,8&nbsp;%</strong>). Cet écart de ~18 points représente environ <strong>24&nbsp;M$ par année</strong> de dépenses qui ne s'expliquent ni par l'inflation ni par la croissance démographique.</p>
+<hr class="sep">
 
-    <div class="stats-grid">
-      <div class="stat-card red">
-        <div class="stat-number">+36,8%</div>
-        <div class="stat-label">Croissance des dépenses 2020→2024</div>
-      </div>
-      <div class="stat-card gold">
-        <div class="stat-number">+18,5%</div>
-        <div class="stat-label">Inflation (IPC Québec) cumulée</div>
-      </div>
-      <div class="stat-card gold">
-        <div class="stat-number">+1,8%</div>
-        <div class="stat-label">Croissance de la population</div>
-      </div>
-      <div class="stat-card red">
-        <div class="stat-number">~24 M$</div>
-        <div class="stat-label">Dépenses excédentaires annuelles</div>
-      </div>
-    </div>
+<section id="diagnostic"><div class="ct"><div class="sl">Le portrait global</div><h2>Les dépenses croissent deux fois plus vite que l'inflation</h2><hr class="da"><h3>Tableau de bord 2020-2024</h3><div class="tw"><table><thead><tr><th>Indicateur (M$, consolidé)</th><th class="n">2020</th><th class="n">2021</th><th class="n">2022</th><th class="n">2023</th><th class="n">2024</th><th class="n">Variation</th></tr></thead><tbody><tr><td><strong>Revenus totaux</strong></td><td class="n">198,9</td><td class="n">214,3</td><td class="n">220,3</td><td class="n">237,1</td><td class="n">256,2</td><td class="n">+28,8%</td></tr><tr><td><strong>Charges totales</strong></td><td class="n">174,9</td><td class="n">190,6</td><td class="n">213,5</td><td class="n">220,9</td><td class="n">242,4</td><td class="n rt">+38,6%</td></tr><tr><td><strong>Excédent (fins fiscales)</strong></td><td class="n">22,6</td><td class="n">15,5</td><td class="n">10,3</td><td class="n rt">4,1</td><td class="n">6,8</td><td class="n rt">−70%</td></tr><tr><td><strong>Masse salariale</strong></td><td class="n">75,9</td><td class="n">82,0</td><td class="n">89,1</td><td class="n">93,3</td><td class="n">100,6</td><td class="n rt">+32,5%</td></tr><tr><td><strong>Effectifs</strong></td><td class="n">—</td><td class="n">772</td><td class="n">813</td><td class="n">838</td><td class="n">886</td><td class="n rt">+114</td></tr><tr><td><strong>Dette totale nette</strong></td><td class="n">201,0</td><td class="n">200,8</td><td class="n">216,5</td><td class="n">253,7</td><td class="n">301,4</td><td class="n rt">+100 M$</td></tr><tr><td><strong>Investissements</strong></td><td class="n">44,1</td><td class="n">44,3</td><td class="n">50,8</td><td class="n">64,9</td><td class="n">67,1</td><td class="n">+52%</td></tr><tr><td><strong>Frais d'intérêts</strong></td><td class="n">5,8</td><td class="n">5,9</td><td class="n">6,3</td><td class="n">7,6</td><td class="n">9,1</td><td class="n rt">+56,4%</td></tr></tbody></table></div><p class="sm">Sources : Rapports financiers consolidés audités 2020-2024, Sommaires MAMH, Charges par objets (pages S19 et S28).</p><div class="ex"><strong>💡 Que veut dire l'IPC ?</strong> L'Indice des prix à la consommation mesure l'augmentation du coût de la vie. Si l'IPC monte de 18,5&nbsp;% en 4 ans, les dépenses de la Ville devraient monter d'environ autant — plus un peu pour la croissance de population. Tout ce qui dépasse est de la croissance « artificielle » que le contribuable finance sans bénéfice proportionnel.</div></div></section>
 
-    <h3>Le tableau de bord 2020-2024</h3>
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Indicateur (M$, consolidé)</th><th class="num">2020</th><th class="num">2021</th><th class="num">2022</th><th class="num">2023</th><th class="num">2024</th><th class="num">Δ</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Revenus totaux</strong></td><td class="num">198,9</td><td class="num">214,3</td><td class="num">220,3</td><td class="num">237,1</td><td class="num">256,2</td><td class="num">+28,8%</td></tr>
-          <tr><td><strong>Charges totales</strong></td><td class="num">174,9</td><td class="num">190,6</td><td class="num">213,5</td><td class="num">220,9</td><td class="num">242,4</td><td class="num red-text">+38,6%</td></tr>
-          <tr><td><strong>Excédent (fins fiscales)</strong></td><td class="num">22,6</td><td class="num">15,5</td><td class="num">10,3</td><td class="num red-text">4,1</td><td class="num">6,8</td><td class="num red-text">-70%</td></tr>
-          <tr><td><strong>Masse salariale</strong></td><td class="num">75,9</td><td class="num">82,0</td><td class="num">89,1</td><td class="num">93,3</td><td class="num">100,6</td><td class="num red-text">+32,5%</td></tr>
-          <tr><td><strong>Effectifs</strong></td><td class="num">—</td><td class="num">772</td><td class="num">813</td><td class="num">838</td><td class="num">886</td><td class="num red-text">+114</td></tr>
-          <tr><td><strong>Dette totale nette</strong></td><td class="num">201,0</td><td class="num">200,8</td><td class="num">216,5</td><td class="num">253,7</td><td class="num">301,4</td><td class="num red-text">+100 M$</td></tr>
-          <tr><td><strong>Investissements</strong></td><td class="num">44,1</td><td class="num">44,3</td><td class="num">50,8</td><td class="num">64,9</td><td class="num">67,1</td><td class="num">+52%</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="font-size:0.8rem;color:var(--muted);font-style:italic;">Sources : Rapports financiers consolidés audités 2020-2024, Sommaires MAMH, Charges par objets.</p>
-  </div>
-</section>
+<hr class="sep">
 
-<hr class="sep" style="max-width:900px;margin:0 auto;">
+<section id="drapeaux"><div class="ct"><div class="sl">Ce qui devrait alarmer</div><h2>🚩 Les 7 drapeaux rouges</h2><hr class="da">
 
-<!-- DRAPEAUX ROUGES -->
-<section id="drapeaux">
-  <div class="container">
-    <div class="section-label">Ce qui devrait alarmer</div>
-    <h2>Les 6 drapeaux rouges</h2>
-    <hr class="divider-accent">
+<div class="fc"><span class="fb">🚩 #1</span><span class="fco">Coût : 10,6 M$/an → 247 $/ménage</span><h3>Administration générale : +60,7&nbsp;% en 4 ans</h3><p>De 17,5&nbsp;M$ à 28,1&nbsp;M$ — <strong>trois fois l'inflation</strong>. Ce poste regroupe le greffe, les finances, les ressources humaines, les technologies de l'information (TI), les communications, la direction générale, le cabinet de la mairesse et la vérificatrice générale (VG). Même en soustrayant les obligations légales (~2&nbsp;M$/an pour la VG et le cabinet), il reste <strong>8,6&nbsp;M$</strong> de croissance dans la bureaucratie pure. En 2024, c'est le <strong>seul poste majeur qui a dépassé son budget</strong> (+1,4&nbsp;M$).</p></div>
 
-    <div class="flag-card" data-flag="🔴 Drapeau #1">
-      <h3>Administration générale : +60,7&nbsp;% en 4 ans</h3>
-      <p>De 17,5&nbsp;M$ à 28,1&nbsp;M$ — <strong>trois fois l'inflation</strong>. Greffe, finances, RH, TI, communications, direction générale, cabinet de la mairesse, vérificatrice générale. Même en soustrayant les obligations légales (VG, cabinet : ~2&nbsp;M$/an), il reste <strong>8,6&nbsp;M$ de croissance</strong> inexpliquée dans la bureaucratie. En 2024, c'est le <strong>seul poste majeur en dépassement budgétaire</strong> (+1,4&nbsp;M$, +5,3&nbsp;%).</p>
-      <p><strong>Coût pour le contribuable :</strong> les 10,6&nbsp;M$ de croissance = ~258&nbsp;$/ménage/an. Plus que la hausse totale du compte de taxes 2025.</p>
-    </div>
+<div class="fc"><span class="fb">🚩 #2</span><span class="fco">Coût : 24,7 M$ de croissance → 575 $/ménage</span><h3>Masse salariale : 100&nbsp;M$ et 114 embauches</h3><p>La masse salariale (salaires + charges sociales : assurances, retraite, cotisations) est passée de 75,9&nbsp;M$ à 100,6&nbsp;M$ (+32,5&nbsp;%). Les effectifs ont crû de <strong>114 employés en 3 ans</strong> : +25 cadres, +38 cols blancs, +27 policiers, +13 pompiers, +17 cols bleus. À titre de comparaison, <strong>Drummondville</strong> (83&nbsp;000 hab.) fonctionne avec ~500 employés (6,0/1&nbsp;000 hab.). SJSR est à <strong>8,9/1&nbsp;000</strong>. L'écart de rémunération entre le municipal et le privé est de ~28&nbsp;% selon l'Institut de la statistique du Québec.</p></div>
 
-    <div class="flag-card" data-flag="🔴 Drapeau #2">
-      <h3>Masse salariale : 100&nbsp;M$ et 114 embauches</h3>
-      <p>La masse salariale (rémunération + charges sociales) est passée de 75,9&nbsp;M$ à 100,6&nbsp;M$ (+32,5&nbsp;%). Les effectifs ont crû de <strong>114 employés en 3 ans</strong> (+15&nbsp;%) pour une population quasi-stable. Cadres : +25 (+18,8&nbsp;%), policiers : +27 (+18,4&nbsp;%), pompiers : +13 (+21,3&nbsp;%), cols blancs : +38 (+15,3&nbsp;%). Drummondville (83&nbsp;000 hab.) fonctionne avec ~500 employés. SJSR en a 886.</p>
-    </div>
+<div class="fc"><span class="fb">🚩 #3</span><span class="fco">Coût : 3,3 M$/an d'intérêts en plus → 77 $/ménage</span><h3>Dette : +100&nbsp;M$ en 4 ans</h3><p>L'endettement total net est passé de 201&nbsp;M$ à 301&nbsp;M$. Le <strong>service de la dette</strong> (les remboursements de capital + les intérêts payés chaque année aux banques) atteint <strong>26,8&nbsp;M$</strong> au budget 2025, soit 13&nbsp;% du budget. Le seuil d'alerte reconnu en finances municipales est de 15&nbsp;%.</p><div class="ex"><strong>💡 Pourquoi c'est grave ?</strong> Chaque dollar payé en intérêts est un dollar qui ne va pas aux services. Si les taux d'intérêt remontent d'un seul point sur 259&nbsp;M$ de dette = ~2,6&nbsp;M$/an de plus en intérêts, soit 61&nbsp;$/ménage.</div></div>
 
-    <div class="flag-card" data-flag="🔴 Drapeau #3">
-      <h3>Dette : +100&nbsp;M$ en 4 ans</h3>
-      <p>L'endettement total net est passé de 201&nbsp;M$ à 301&nbsp;M$. Les nouveaux emprunts annuels sont passés de 20,6&nbsp;M$ (2021) à 47,1&nbsp;M$ (2024). Le service de la dette approche <strong>15&nbsp;% du budget</strong> — le seuil d'alerte. À ce rythme, la dette franchira 350&nbsp;M$ d'ici 2028 et chaque dollar d'intérêt sera un dollar qui ne va pas aux services.</p>
-    </div>
+<div class="fc"><span class="fb">🚩 #4</span><span class="fco">Coût : 9,2 M$ de croissance → 214 $/ménage</span><h3>Loisirs et culture : +39,3&nbsp;%</h3><p>De 23,3&nbsp;M$ à 32,5&nbsp;M$ — plus du double de l'inflation. Les <strong>transferts discrétionnaires</strong> à des organismes (subventions à des groupes communautaires, culturels, événementiels) ont <strong>triplé</strong> : de 2,5&nbsp;M$ (2021) à 7,3&nbsp;M$ (2024). En 2024, les contributions ont dépassé le budget de 5,0&nbsp;M$ — des cadeaux distribués en fin d'année avec l'excédent, sans vote spécifique du conseil.</p></div>
 
-    <div class="flag-card" data-flag="🔴 Drapeau #4">
-      <h3>Loisirs et culture : +39,3&nbsp;% (+9,2&nbsp;M$)</h3>
-      <p>De 23,3&nbsp;M$ à 32,5&nbsp;M$, plus du double de l'inflation. Les contributions à des organismes dépassent systématiquement le budget. Les transferts discrétionnaires à d'autres organismes ont <strong>triplé</strong> : de 2,5&nbsp;M$ (2021) à 7,3&nbsp;M$ (2024). En 2024, +5,0&nbsp;M$ de dépassement non budgété.</p>
-    </div>
+<div class="fc"><span class="fb">🚩 #5</span><span class="fco">Coût : 3,5 M$/an → 82 $/ménage</span><h3>Itinérance : de 283&nbsp;K$ à 3,77&nbsp;M$ en un an</h3><p>Le poste « Santé et bien-être » était quasi nul de 2020 à 2023, puis a bondi à <strong>3,77&nbsp;M$</strong> en 2024 — un programme d'itinérance apparu sans mandat budgétaire. Au Québec, l'itinérance relève du <strong>MSSS</strong> (ministère de la Santé et des Services sociaux) et des <strong>CIUSSS</strong> (les centres intégrés de santé qui gèrent les services sociaux dans chaque région), pas des municipalités.</p></div>
 
-    <div class="flag-card" data-flag="🔴 Drapeau #5">
-      <h3>Santé/bien-être : de 283&nbsp;K$ à 3,77&nbsp;M$ en un an</h3>
-      <p>Un programme de 3,5&nbsp;M$ apparu en 2024 sans mandat budgétaire, vraisemblablement lié à la « gestion de l'itinérance ». L'itinérance relève du MSSS et des CIUSSS, pas des municipalités. C'est une décision politique significative prise sans débat budgétaire transparent.</p>
-    </div>
+<div class="fc"><span class="fb">🚩 #6</span><span class="fco">Coût : 3,3 M$/an supplémentaires → 77 $/ménage</span><h3>Frais d'intérêts : +56,4&nbsp;%</h3><p>Les intérêts payés aux banques sont passés de 5,8&nbsp;M$ à 9,1&nbsp;M$. C'est de l'argent qui sort de la Ville chaque année pour rembourser des prêteurs — pas pour réparer des routes ni protéger des citoyens.</p></div>
 
-    <div class="flag-card" data-flag="🔴 Drapeau #6">
-      <h3>Frais de financement : +56,4&nbsp;%</h3>
-      <p>Les intérêts sur la dette sont passés de 5,8&nbsp;M$ à 9,1&nbsp;M$. Si les taux d'intérêt restent élevés, chaque point de % supplémentaire sur 259&nbsp;M$ de dette = ~2,6&nbsp;M$/an d'intérêts additionnels.</p>
-    </div>
-  </div>
-</section>
+<div class="fc"><span class="fb">🚩 #7</span><span class="fco">Coût : 4,3 M$ de croissance → 100 $/ménage</span><h3>Matières résiduelles : +41&nbsp;% et tarifs +31&nbsp;%</h3><p>Le coût de la collecte des déchets, recyclage et compostage est passé de 10,5&nbsp;M$ à 14,9&nbsp;M$. <strong>Et</strong> le tarif sur votre compte de taxes monte aussi : de 212&nbsp;$ à 278&nbsp;$ en 2026. Le contribuable paie double. Le « taux de récupération » (la part couverte par les tarifs) n'est que de ~79&nbsp;% — le 21&nbsp;% restant est subventionné par vos taxes générales.</p></div>
 
-<hr class="sep" style="max-width:900px;margin:0 auto;">
+</div></section>
 
-<!-- MENSONGES -->
-<section id="mensonges">
-  <div class="container">
-    <div class="section-label">Ce qu'on ne vous dit pas</div>
-    <h2>Présentations trompeuses et manipulations</h2>
-    <hr class="divider-accent">
+<hr class="sep">
 
-    <h3>1. Sous-budgétisation chronique des revenus</h3>
-    <p>Chaque année, les revenus réels dépassent le budget de <strong>7 à 11&nbsp;%</strong>. En 2024, l'écart est de 19,0&nbsp;M$ (+8,6&nbsp;%). Ce n'est pas de la « prudence » — c'est un budget systématiquement sous-estimé qui permet de justifier les hausses de taxes, puis d'annoncer des excédents en fin d'année. L'administration le reconnaît elle-même en citant la « prudence des projections » comme fait saillant positif.</p>
+<section id="mensonges"><div class="ct"><div class="sl">Ce qu'on ne vous dit pas</div><h2>Présentations trompeuses</h2><hr class="da">
 
-    <div class="table-wrap">
-      <table>
-        <thead><tr><th>Année</th><th class="num">Revenus budgétés</th><th class="num">Revenus réels</th><th class="num">Écart</th><th class="num">Écart %</th></tr></thead>
-        <tbody>
-          <tr><td>2020</td><td class="num">173,2 M$</td><td class="num">185,3 M$</td><td class="num red-text">+12,1 M$</td><td class="num red-text">+7,0%</td></tr>
-          <tr><td>2021</td><td class="num">179,9 M$</td><td class="num">192,2 M$</td><td class="num red-text">+12,3 M$</td><td class="num red-text">+6,8%</td></tr>
-          <tr><td>2022</td><td class="num">184,5 M$</td><td class="num">204,8 M$</td><td class="num red-text">+20,3 M$</td><td class="num red-text">+11,0%</td></tr>
-          <tr><td>2023</td><td class="num">200,2 M$</td><td class="num">208,9 M$</td><td class="num red-text">+8,8 M$</td><td class="num red-text">+4,4%</td></tr>
-          <tr><td>2024</td><td class="num">220,7 M$</td><td class="num">239,7 M$</td><td class="num red-text">+19,0 M$</td><td class="num red-text">+8,6%</td></tr>
-        </tbody>
-      </table>
-    </div>
+<h3>1. Le budget est systématiquement sous-estimé côté revenus</h3><p>Chaque année, la Ville prévoit des revenus inférieurs à ce qu'elle sait qu'elle va recevoir. Résultat : elle justifie des hausses de taxes au moment du budget, puis annonce un excédent en fin d'année.</p><div class="tw"><table><thead><tr><th>Année</th><th class="n">Budget prévu</th><th class="n">Revenus réels</th><th class="n">Écart</th></tr></thead><tbody><tr><td>2020</td><td class="n">173,2 M$</td><td class="n">185,3 M$</td><td class="n rt">+12,1 M$ (+7,0%)</td></tr><tr><td>2021</td><td class="n">179,9 M$</td><td class="n">192,2 M$</td><td class="n rt">+12,3 M$ (+6,8%)</td></tr><tr><td>2022</td><td class="n">184,5 M$</td><td class="n">204,8 M$</td><td class="n rt">+20,3 M$ (+11,0%)</td></tr><tr><td>2023</td><td class="n">200,2 M$</td><td class="n">208,9 M$</td><td class="n rt">+8,8 M$ (+4,4%)</td></tr><tr><td>2024</td><td class="n">220,7 M$</td><td class="n">239,7 M$</td><td class="n rt">+19,0 M$ (+8,6%)</td></tr></tbody></table></div><p>Après 5 années consécutives d'écarts de 7 à 11&nbsp;%, ce n'est plus de la « prudence » — c'est une stratégie.</p>
 
-    <h3>2. Comparaison budget-à-budget (jamais les réalisations)</h3>
-    <p>L'administration compare toujours le budget de l'année en cours au budget de l'année précédente — jamais aux réalisations réelles. Cela masque la croissance réelle des dépenses.</p>
+<h3>2. On compare des pommes avec des oranges</h3><div class="ex"><strong>💡 Le truc à comprendre :</strong> quand la Ville annonce « le budget augmente de X&nbsp;% », elle compare le <em>budget prévu</em> de cette année au <em>budget prévu</em> de l'an passé — jamais aux <em>dépenses réelles</em>. Or les dépenses réelles dépassent toujours le budget. C'est comme comparer votre liste d'épicerie à celle de la semaine dernière au lieu de comparer ce que vous avez <em>vraiment</em> dépensé.</div>
 
-    <h3>3. Ratio dette/RFU amélioré artificiellement</h3>
-    <p>Le ratio passe de 1,67$ à 1,52$ par 100$ d'évaluation — mais c'est parce que le rôle d'évaluation a fait exploser le dénominateur de <strong>47,5&nbsp;%</strong>. La dette réelle, au numérateur, a bondi de 100&nbsp;M$. Les « 11 villes comparables » ne sont jamais identifiées.</p>
+<h3>3. Le ratio de dette « amélioré » par magie</h3><p>La Ville présente un ratio de <strong>1,52&nbsp;$</strong> par 100&nbsp;$ de RFU (Richesse Foncière Uniformisée — c'est la valeur totale de toutes les propriétés, standardisée par le ministère). Ce ratio baisse... parce que le rôle d'évaluation a fait exploser la <strong>valeur des maisons de 47,5&nbsp;%</strong>. Le dénominateur grossit, le ratio diminue — même si la dette réelle a bondi de 100&nbsp;M$. C'est comme dire qu'on est moins endetté parce que notre maison vaut plus cher, même si on a pris une deuxième hypothèque.</p>
 
-    <h3>4. « Économies en rémunération » = postes vacants</h3>
-    <p>Les « économies » de 6-7,5&nbsp;M$/an sont des postes budgétés mais non pourvus. L'excédent de fonctionnement n'existe que parce que la Ville ne parvient pas à recruter. Le jour où ces postes sont comblés, l'excédent disparaît.</p>
+<h3>4. Les « économies » sont des postes vacants</h3><p>Les présentations annuelles vantent des « économies en rémunération » de 6 à 7,5&nbsp;M$. En réalité, ce sont des postes budgétés mais non pourvus à cause de la pénurie de main-d'œuvre. L'excédent n'existe que parce que la Ville n'arrive pas à recruter.</p>
 
-    <h3>5. « Cadre financier » sans cibles mesurables</h3>
-    <p>Phrase répétée textuellement dans les faits saillants 2021-2023 : « Les investissements et la dette évoluent en conformité avec la stratégie du cadre financier... » Ce « cadre financier » n'a jamais été défini publiquement avec des cibles chiffrées. C'est un bouclier rhétorique, pas un outil de gestion.</p>
+<h3>5. Le « cadre financier » est un mirage</h3><p>La mairesse Bouchard répétait dans chaque rapport : <em>« Les investissements et la dette évoluent en conformité avec la stratégie du cadre financier. »</em> Ce cadre n'a <strong>jamais été défini</strong> avec des cibles mesurables. Pas de ratio maximum, pas de plafond de dette, pas de cible d'effectifs. Un slogan, pas un outil de gestion.</p>
 
-    <h3>6. Le seuil de 100&nbsp;000 habitants : coûts permanents</h3>
-    <p>Le passage à 100&nbsp;000 hab. en 2022 a déclenché ~1,8-2,0&nbsp;M$/an de coûts (VG, police niveau 2, cabinet). La population est redescendue à 99&nbsp;494 en 2023, mais les coûts sont restés. L'article 6.1 de la Loi sur les cités et villes impose 5 ans consécutifs sous le seuil avant de pouvoir lever ces obligations.</p>
-  </div>
-</section>
+<h3>6. Le piège des 100&nbsp;000 habitants</h3><p>En 2022, la population a atteint 100&nbsp;188, déclenchant ~2&nbsp;M$/an de coûts obligatoires (VG, police niveau 2, cabinet). En 2023, la population est redescendue à 99&nbsp;494 — mais les coûts sont <strong>restés</strong>. La loi impose 5 ans consécutifs sous le seuil avant de pouvoir s'en défaire.</p>
 
-<hr class="sep" style="max-width:900px;margin:0 auto;">
+</div></section>
 
-<!-- DÉPENSES DISCUTABLES -->
-<section id="fluff" style="background: #fafaf8;">
-  <div class="container">
-    <div class="section-label">Ce qui pourrait être coupé</div>
-    <h2>Les dépenses discutables</h2>
-    <hr class="divider-accent">
-    <p>Au-delà de la croissance des coûts opérationnels, la Ville consacre des millions à des activités qui ne relèvent pas de ses compétences essentielles.</p>
+<hr class="sep">
 
-    <h3>🌿 Stratégie « carboneutre et inclusive » et écosystèmes</h3>
-    <p>La Stratégie DD 2030 vise une ville « verte, carboneutre et inclusive ». Taxe spéciale « écosystèmes naturels » : <strong>~109&nbsp;$/ménage/an</strong>. Réserve accumulée : <strong>11,6&nbsp;M$</strong>. PTI 2024-2026 : <strong>24,5&nbsp;M$ pour l'environnement</strong>. Plus des balados, conférences, « communautés d'action »… Est-ce vraiment la priorité quand les infrastructures d'eau vieillissent et que le compte de taxes monte de 3-4&nbsp;%/an ?</p>
+<section id="fluff" style="background:#fafaf8"><div class="ct"><div class="sl">Ce qui pourrait être coupé</div><h2>Les dépenses discutables</h2><hr class="da"><p>Une municipalité, c'est d'abord de l'eau potable, des routes, du déneigement, de la sécurité et de la collecte des déchets. Tout le reste est un choix politique — un choix qui a un prix.</p>
 
-    <h3>🏛️ Place publique : 6,5&nbsp;M$ pour un « îlot de chaleur »</h3>
-    <p>Emprunt de 6,5&nbsp;M$ pour réaménager une place, justifié par la stratégie DD. Inclut pavé de couleur pâle, une « œuvre d'art d'envergure » et des toilettes. Service de la dette : ~350&nbsp;K$/an pendant 20 ans.</p>
+<h3>🌿 Stratégie « carboneutre et inclusive » : ~4,5&nbsp;M$/an</h3><p>La Stratégie de développement durable (DD) 2030 vise une ville « verte, carboneutre et inclusive ». Elle impose une <strong>taxe spéciale « écosystèmes naturels »</strong> (~109&nbsp;$/ménage/an), accumule une réserve de <strong>11,6&nbsp;M$</strong>, et prévoit 24,5&nbsp;M$ d'investissements. Plus des balados, conférences et « communautés d'action ». Drummondville et Granby ne font rien de semblable.</p>
 
-    <h3>🎈 Festival de montgolfières : 754&nbsp;K$/an</h3>
-    <p>Organisme contrôlé par la Ville, consolidé dans les états financiers. Subvention + emprunt garanti. Le festival a de la valeur touristique, mais pourrait-il être davantage autofinancé ?</p>
+<h3>🏛️ Place publique : 6,5&nbsp;M$ pour un « îlot de chaleur »</h3><p>Emprunt de 6,5&nbsp;M$ pour réaménager une place, justifié par la stratégie DD. Pavé de couleur pâle, « œuvre d'art d'envergure », toilettes. Service de la dette : ~350&nbsp;K$/an pendant 20 ans.</p>
 
-    <h3>🏠 Itinérance : 3,77&nbsp;M$ — responsabilité provinciale</h3>
-    <p>Programme apparu en 2024 sans mandat budgétaire. L'itinérance relève du MSSS et des CIUSSS. Le maire Latour a obtenu 250&nbsp;K$ du CISSS — le financement provincial existe. La Ville devrait se limiter à la coordination.</p>
+<h3>🎈 Festival de montgolfières : ~754&nbsp;K$/an</h3><p>Organisme contrôlé par la Ville, consolidé dans ses états financiers. Subvention + emprunt garanti par les contribuables.</p>
 
-    <h3>💰 Transferts opaques aux organismes : triplés en 3 ans</h3>
-    <p>De 2,5&nbsp;M$ (2021) à 7,3&nbsp;M$ (2024). En 2024, +5,0&nbsp;M$ de dépassement. La liste des organismes bénéficiaires, les montants et les critères ne sont nulle part dans les documents publics.</p>
+<h3>🏠 Itinérance : 3,77&nbsp;M$ — compétence provinciale</h3><p>Programme apparu en 2024 sans mandat budgétaire. Le MSSS et les CIUSSS ont la compétence. Le maire Latour a obtenu 250&nbsp;K$ du CISSS — le levier provincial existe.</p>
 
-    <h3>📢 Communications et marketing DD</h3>
-    <p>Magazines, balados DD, vidéos, infographies. Le contribuable paie pour que la Ville se fasse belle — pas pour que ses tuyaux soient remplacés.</p>
+<h3>💰 Transferts opaques aux organismes : triplés en 3 ans</h3><p>De 2,5&nbsp;M$ à 7,3&nbsp;M$ en 3 ans. La liste des bénéficiaires ne figure <strong>nulle part</strong> dans les documents publics.</p>
 
-    <div class="alert alert-red" style="margin-top:2rem;">
-      <strong>Total identifiable des dépenses discutables : ~14-17&nbsp;M$/an</strong>
-      Une réduction de 50&nbsp;% sur ces postes = 7-8,5&nbsp;M$/an d'économies, soit ~163-198&nbsp;$/ménage/an.
-    </div>
-  </div>
-</section>
+<h3>📢 Communications et marketing DD</h3><p>Magazines, balados, vidéos, infographies. Le contribuable paie pour que la Ville se fasse belle — pas pour que ses tuyaux soient remplacés.</p>
 
-<hr class="sep" style="max-width:900px;margin:0 auto;">
+<div class="dt"><div class="sl" style="color:#b45309">Total des dépenses discutables identifiées</div><div class="sn">~14 à 17 M$/an</div><p style="margin:1rem 0 0;font-size:1rem">Une réduction de 50&nbsp;% = <strong>7 à 8,5&nbsp;M$/an</strong> d'économies = <strong>163 à 198&nbsp;$/ménage/an</strong></p></div>
 
-<!-- BONS CÔTÉS -->
-<section id="bon">
-  <div class="container">
-    <div class="section-label">Pour être juste</div>
-    <h2>Ce que la Ville fait bien</h2>
-    <hr class="divider-accent">
-    <p>L'honnêteté intellectuelle exige de reconnaître les aspects positifs.</p>
+<h3>Ce que ces 17&nbsp;M$ pourraient financer à la place</h3><div class="cg"><div class="cc"><div class="ca">17 M$</div><div class="cl">Dépenses discutables annuelles</div><div class="ce">= Réfection de ~10 km de conduites d'eau</div></div><div class="cc"><div class="ca">17 M$</div><div class="cl">Dépenses discutables annuelles</div><div class="ce">= Gel du compte de taxes pendant ~3 ans</div></div><div class="cc"><div class="ca">17 M$</div><div class="cl">Dépenses discutables annuelles</div><div class="ce">= 396&nbsp;$ de moins par ménage par an</div></div></div>
 
-    <div class="good-grid">
-      <div class="good-card">
-        <h4>✅ Investissement massif</h4>
-        <p>271&nbsp;M$ en 5 ans, ratio investissement/amortissement de ~2x. La Ville ne laisse pas pourrir ses routes ni ses conduites d'eau. C'est rare au Québec.</p>
-      </div>
-      <div class="good-card">
-        <h4>✅ Dette/RFU compétitive</h4>
-        <p>1,52&nbsp;$ par 100&nbsp;$ d'évaluation vs 2,37&nbsp;$ pour les comparables. Même en corrigeant pour l'effet du rôle, SJSR reste sous la moyenne.</p>
-      </div>
-      <div class="good-card">
-        <h4>✅ Budget/habitant modéré</h4>
-        <p>~2&nbsp;328&nbsp;$/hab., dans la moyenne basse (Shawinigan : 2&nbsp;618&nbsp;$, Saint-Hyacinthe : 2&nbsp;488&nbsp;$).</p>
-      </div>
-      <div class="good-card">
-        <h4>✅ Audit propre en 2024</h4>
-        <p>Opinion sans réserve de Deloitte et de la VG, après une réserve en 2023.</p>
-      </div>
-      <div class="good-card">
-        <h4>✅ Pas de déficit d'entretien</h4>
-        <p>Les infrastructures sont maintenues — le ratio invest./amort. de ~2x le confirme.</p>
-      </div>
-      <div class="good-card">
-        <h4>✅ Nouveau leadership</h4>
-        <p>Le maire Latour a signalé dès son arrivée la nécessité de « recentrer sur l'essentiel ».</p>
-      </div>
-    </div>
-  </div>
-</section>
+</div></section>
 
-<hr class="sep" style="max-width:900px;margin:0 auto;">
+<hr class="sep">
 
-<!-- PLAN D'ACTION -->
-<section id="plan" style="background: #fafaf8;">
-  <div class="container">
-    <div class="section-label">Les solutions</div>
-    <h2>Plan de réduction : 10 mesures, 20-30&nbsp;M$/an</h2>
-    <hr class="divider-accent">
-    <p>Des économies réalisables sans couper les services essentiels (eau, routes, police, incendie, déneigement, collecte, bibliothèques).</p>
+<section id="bon"><div class="ct"><div class="sl">Pour être juste</div><h2>✅ Ce que la Ville fait bien</h2><hr class="da"><p>L'honnêteté exige de reconnaître les aspects positifs.</p><div class="gg"><div class="gc"><h4>✅ Investissement massif</h4><p>271&nbsp;M$ en 5 ans, ratio investissement/amortissement de ~2x. La Ville ne laisse pas pourrir ses infrastructures. C'est rare au Québec.</p></div><div class="gc"><h4>✅ Ratio dette/RFU compétitif</h4><p>1,52&nbsp;$ par 100&nbsp;$ d'évaluation vs 2,37&nbsp;$ pour les comparables. Même en corrigeant l'effet du rôle, SJSR reste sous la moyenne.</p></div><div class="gc"><h4>✅ Budget/habitant modéré</h4><p>~2&nbsp;328&nbsp;$/hab., dans la moyenne basse (Shawinigan : 2&nbsp;618&nbsp;$, Saint-Hyacinthe : 2&nbsp;488&nbsp;$).</p></div><div class="gc"><h4>✅ Audit propre en 2024</h4><p>Après une réserve en 2023, opinion sans réserve de Deloitte et de la vérificatrice générale.</p></div><div class="gc"><h4>✅ Pas de déficit d'entretien</h4><p>Les infrastructures sont maintenues — le ratio invest./amort. de ~2x le confirme.</p></div><div class="gc"><h4>✅ Nouveau leadership</h4><p>Le maire Latour a signalé la nécessité de « recentrer sur l'essentiel » et adopté un budget 2026 de « transition ».</p></div></div></div></section>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">1. Gel d'embauche et attrition</h3>
-        <p>Ne remplacer que 70&nbsp;% des départs. Réduction de ~13 postes/an sans licenciement. Cibler cadres et cols blancs.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">3-5 M$/an</div>
-        <div class="measure-impact">70-117 $/ménage</div>
-        <span class="difficulty diff-med">Difficulté moyenne</span>
-      </div>
-    </div>
+<hr class="sep">
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">2. Plafonner l'administration générale</h3>
-        <p>Ramener de 28,1&nbsp;M$ à 24&nbsp;M$. Geler les cadres, auditer les contrats TI, plafonner le cabinet.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">2-4 M$/an</div>
-        <div class="measure-impact">47-93 $/ménage</div>
-        <span class="difficulty diff-low">Difficulté faible</span>
-      </div>
-    </div>
+<section id="plan" style="background:#fafaf8"><div class="ct"><div class="sl">Les solutions</div><h2>Plan de réduction : 10 mesures concrètes</h2><hr class="da"><p>Classées par économie potentielle. Aucune ne touche les services essentiels (eau, routes, police, incendie, déneigement, collecte, bibliothèques).</p>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">3. Négociation salariale à l'IPC</h3>
-        <p>Plafonner les augmentations à l'IPC (~2,5&nbsp;%/an) au lieu de 3,5-5&nbsp;%. L'écart municipal-privé est déjà de ~28&nbsp;%.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">3-5 M$/an</div>
-        <div class="measure-impact">70-117 $/ménage</div>
-        <span class="difficulty diff-high">Difficulté élevée</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>1. Négociation salariale plafonnée à l'inflation</h3><div class="mn"><div><div class="ma">3 à 5 M$/an</div><div class="mp">70 à 117 $/ménage</div></div><span class="df dh">Élevée</span></div></div><p>Plafonner les augmentations à l'IPC (~2,5&nbsp;%/an) au lieu de 3,5-5&nbsp;%. La masse salariale à l'IPC = 113&nbsp;M$ en 2029, vs 120&nbsp;M$ au rythme actuel.</p><p class="mw">Difficulté : les syndicats municipaux sont puissants et les comparables (Longueuil 23,5&nbsp;%, Gatineau 24&nbsp;%) créent une pression. Bras de fer et possiblement arbitrage requis.</p></div>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">4. Couper les dépenses DD/climat</h3>
-        <p>Geler la taxe écosystèmes, cesser les acquisitions de terrains, éliminer balados et conférences DD.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">2-3 M$/an</div>
-        <div class="measure-impact">47-70 $/ménage</div>
-        <span class="difficulty diff-med">Difficulté moyenne</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>2. Réduire les transferts aux organismes</h3><div class="mn"><div><div class="ma">3 à 4 M$/an</div><div class="mp">70 à 93 $/ménage</div></div><span class="df dh">Élevée</span></div></div><p>Plafonner au niveau 2022 (3,5&nbsp;M$). Reddition de comptes publique pour chaque subvention >100&nbsp;K$.</p><p class="mw">Difficulté : chaque organisme a ses partisans et relais politiques. Couper une subvention fait du bruit — mais la transparence n'est pas négociable.</p></div>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">5. Réduire les transferts aux organismes</h3>
-        <p>Plafonner au niveau 2022 (3,5&nbsp;M$). Reddition de comptes publique pour chaque subvention >100&nbsp;K$.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">3-4 M$/an</div>
-        <div class="measure-impact">70-93 $/ménage</div>
-        <span class="difficulty diff-high">Difficulté élevée</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>3. Gel d'embauche et attrition naturelle</h3><div class="mn"><div><div class="ma">3 à 5 M$/an</div><div class="mp">70 à 117 $/ménage</div></div><span class="df dm">Moyenne</span></div></div><p>Ne remplacer que 70&nbsp;% des départs (~44/an). ~13 postes en moins par an, zéro licenciement. Cibler cadres et cols blancs.</p><p class="mw">Difficulté : les syndicats résisteront au non-remplacement, mais aucun licenciement n'est requis. C'est le temps qui fait le travail.</p></div>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">6. Ralentir les investissements</h3>
-        <p>De 67&nbsp;M$/an à 50&nbsp;M$/an. Ratio investissement/amortissement reste à ~1,5x. Prioriser eau/égout/routes.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">2-3 M$/an</div>
-        <div class="measure-impact">47-70 $/ménage</div>
-        <span class="difficulty diff-med">Difficulté moyenne</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>4. Plafonner l'administration générale à 24&nbsp;M$</h3><div class="mn"><div><div class="ma">2 à 4 M$/an</div><div class="mp">47 à 93 $/ménage</div></div><span class="df dl">Faible</span></div></div><p>Ramener de 28,1&nbsp;M$ à 24&nbsp;M$. Geler les cadres (ratio 1:4,5 vs cible 1:5,5), auditer les contrats TI.</p><p class="mw">Difficulté : c'est la bureaucratie interne. Aucun citoyen ne verra la différence dans les services qu'il reçoit.</p></div>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">7. Transférer l'itinérance au provincial</h3>
-        <p>Limiter le rôle municipal à la coordination. Le CIUSSS et le MSSS doivent assumer le financement.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">2-3 M$/an</div>
-        <div class="measure-impact">47-70 $/ménage</div>
-        <span class="difficulty diff-med">Difficulté moyenne</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>5. Couper les dépenses DD, climat, écosystèmes</h3><div class="mn"><div><div class="ma">2 à 3 M$/an</div><div class="mp">47 à 70 $/ménage</div></div><span class="df dm">Moyenne</span></div></div><p>Geler la taxe écosystèmes, cesser les acquisitions de terrains. Éliminer balados et conférences DD.</p><p class="mw">Difficulté : opposition des groupes environnementaux, mais le contribuable moyen ne fréquente pas les « communautés d'action DD ».</p></div>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">8. Optimiser hygiène du milieu</h3>
-        <p>Renégocier les contrats de collecte (+41&nbsp;% en 4 ans). Taux de récupération des coûts de 79&nbsp;% à 90&nbsp;%.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">1-2 M$/an</div>
-        <div class="measure-impact">23-47 $/ménage</div>
-        <span class="difficulty diff-low">Difficulté faible</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>6. Transférer l'itinérance au provincial</h3><div class="mn"><div><div class="ma">2 à 3 M$/an</div><div class="mp">47 à 70 $/ménage</div></div><span class="df dm">Moyenne</span></div></div><p>Limiter le rôle municipal à la coordination. Le CIUSSS/MSSS doit assumer le financement direct.</p><p class="mw">Difficulté : sensibilité sociale réelle, mais la compétence est clairement provinciale. Le levier existe déjà (subvention CISSS de 250&nbsp;K$).</p></div>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">9. Réduire communications/marketing</h3>
-        <p>Éliminer balados DD, réduire les publications, limiter le marketing territorial.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">0,5-1 M$/an</div>
-        <div class="measure-impact">12-23 $/ménage</div>
-        <span class="difficulty diff-low">Difficulté faible</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>7. Ralentir les investissements à 50&nbsp;M$/an</h3><div class="mn"><div><div class="ma">2 à 3 M$/an</div><div class="mp">47 à 70 $/ménage</div></div><span class="df dm">Moyenne</span></div></div><p>De 67&nbsp;M$/an à 50&nbsp;M$/an. Ratio investissement/amortissement reste à ~1,5x. Prioriser eau, égout, routes.</p><p class="mw">Difficulté : des projets seront reportés, mais les infrastructures essentielles restent protégées.</p></div>
 
-    <div class="measure">
-      <div>
-        <h3 style="margin-top:0;">10. Transparence budgétaire</h3>
-        <p>Comparatif réalisations-à-réalisations, cadre financier avec cibles, liste des 100&nbsp;K$+, droits de mutation budgétés sur moyenne 3 ans.</p>
-      </div>
-      <div class="measure-meta">
-        <div class="measure-amount">1 M$ (ind.)</div>
-        <div class="measure-impact">23 $/ménage</div>
-        <span class="difficulty diff-low">Difficulté faible</span>
-      </div>
-    </div>
+<div class="ms"><div class="mh"><h3>8. Optimiser la collecte des déchets</h3><div class="mn"><div><div class="ma">1 à 2 M$/an</div><div class="mp">23 à 47 $/ménage</div></div><span class="df dl">Faible</span></div></div><p>Renégocier les contrats (+41&nbsp;% en 4 ans). Taux de récupération de 79&nbsp;% à 90&nbsp;%.</p><p class="mw">Difficulté : technique — renégociation de contrats, pas de décision politique sensible.</p></div>
 
-    <!-- TOTAL -->
-    <div style="margin-top:3rem; padding:2.5rem; background:white; border:2px solid var(--green); border-radius:6px; text-align:center;">
-      <div class="section-label" style="color:var(--green);">Impact total pour le contribuable</div>
-      <h2 style="color:var(--green); margin-bottom:0.5rem;">Économies : 20 à 30&nbsp;M$/an</h2>
-      <p style="font-size:1.2rem; margin-bottom:1.5rem;">soit <strong>8,6 à 13&nbsp;%</strong> du budget</p>
+<div class="ms"><div class="mh"><h3>9. Transparence budgétaire complète</h3><div class="mn"><div><div class="ma">~1 M$ (indirect)</div><div class="mp">~23 $/ménage</div></div><span class="df dl">Faible</span></div></div><p>Publier un comparatif réalisations-à-réalisations. Définir le cadre financier avec des cibles. Liste des employés à 100&nbsp;K$+.</p><p class="mw">Difficulté : zéro. C'est de la bonne gouvernance de base. Que des bénéfices en discipline et confiance.</p></div>
 
-      <div class="stats-grid" style="max-width:700px;margin:0 auto;">
-        <div class="stat-card green">
-          <div class="stat-number">-466$</div>
-          <div class="stat-label">Scénario conservateur (20&nbsp;M$)</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-number">-583$</div>
-          <div class="stat-label">Scénario modéré (25&nbsp;M$)</div>
-        </div>
-        <div class="stat-card green">
-          <div class="stat-number">-699$</div>
-          <div class="stat-label">Scénario ambitieux (30&nbsp;M$)</div>
-        </div>
-      </div>
+<div class="ms"><div class="mh"><h3>10. Réduire communications et marketing DD</h3><div class="mn"><div><div class="ma">0,5 à 1 M$/an</div><div class="mp">12 à 23 $/ménage</div></div><span class="df dl">Faible</span></div></div><p>Éliminer les balados DD, réduire les publications. Une Ville n'a pas besoin d'une agence de com' interne.</p><p class="mw">Difficulté : personne ne remarquera la disparition du balado DD.</p></div>
 
-      <p style="margin-top:1.5rem;font-size:0.95rem;">Ou alternativement : un <strong>gel complet du compte de taxes pendant 5 à 7 ans</strong> tout en maintenant les services essentiels.</p>
-    </div>
+<!-- IMPACT BOX -->
+<div class="ib"><div class="sl" style="color:var(--green)">Impact total pour votre compte de taxes</div><h2>Économies réalisables : 20 à 30&nbsp;M$/an</h2><p style="font-size:1.1rem;margin-bottom:2rem">soit <strong>8,6 à 13&nbsp;%</strong> du budget — sans toucher à un seul service essentiel</p><div class="is"><div class="sco"><div class="scl">Conservateur</div><div class="sca">−466 $</div><div class="scd">par ménage/an (20&nbsp;M$)</div><div class="scd">Compte : <strong>2&nbsp;816&nbsp;$</strong></div></div><div class="sco"><div class="scl">Modéré</div><div class="sca">−583 $</div><div class="scd">par ménage/an (25&nbsp;M$)</div><div class="scd">Compte : <strong>2&nbsp;699&nbsp;$</strong></div></div><div class="sco"><div class="scl">Ambitieux</div><div class="sca">−699 $</div><div class="scd">par ménage/an (30&nbsp;M$)</div><div class="scd">Compte : <strong>2&nbsp;583&nbsp;$</strong></div></div></div><p style="font-size:1.1rem;margin:1.5rem 0 0">Ou : un <strong>gel complet du compte de taxes pendant 5 à 7 ans</strong></p></div>
 
-    <div class="alert alert-red" style="margin-top:2rem;">
-      <strong>⚠️ Sans action</strong>
-      Le compte de taxes moyen atteindra ~3&nbsp;700-3&nbsp;800&nbsp;$ d'ici 2028. Les conventions collectives à venir et le service de la dette croissant ne laissent aucune marge de manœuvre.
-    </div>
-  </div>
-</section>
+<h3>Ce que 583&nbsp;$/an représente concrètement</h3>
+<div class="cg"><div class="cc"><div class="ca">49 $/mois</div><div class="cl">de plus dans votre poche</div><div class="ce">= une épicerie familiale par mois</div></div><div class="cc"><div class="ca">583 $</div><div class="cl">par année</div><div class="ce">= votre compte d'électricité annuel</div></div><div class="cc"><div class="ca">583 $</div><div class="cl">par année</div><div class="ce">= 2 mois de garderie subventionnée</div></div></div>
 
-<!-- SOURCES -->
-<section>
-  <div class="container" style="text-align:center;">
-    <div class="section-label">Méthodologie</div>
-    <h2>Sources et données</h2>
-    <hr class="divider-accent" style="margin:1rem auto 2rem;">
-    <p style="font-size:0.9rem;max-width:650px;margin:0 auto 1rem;">Cette analyse est basée exclusivement sur des documents publics officiels :</p>
-    <div style="text-align:left; max-width:650px; margin:0 auto; font-size:0.85rem; color:var(--muted); line-height:1.8;">
-      <p>• Rapports financiers consolidés audités 2020-2024 (déposés au MAMH)<br>
-      • Budgets 2025 et 2026 (adoptés par le conseil)<br>
-      • Sommaires de l'information financière consolidée 2020-2024 (format MAMH)<br>
-      • Rapports de faits saillants de la mairesse 2021-2024<br>
-      • Présentations des rapports financiers 2020-2024<br>
-      • Profils financiers MAMH (Données Québec)<br>
-      • IPC Québec (Institut de la statistique du Québec / Statistique Canada)<br>
-      • Étude HEC-CPP 2020 sur la rémunération municipale au Québec<br>
-      • Articles : Le Canada Français, La Presse, Radio-Canada, Noovo Info<br>
-      • Site web de la Ville : sjsr.ca</p>
-    </div>
-  </div>
-</section>
+<!-- DOOM BOX -->
+<div class="db"><h3>⚠️ Et si on ne fait rien ?</h3><p>Sans aucune mesure, voici ce qui attend les contribuables :</p><div class="sg" style="margin:1.5rem 0"><div class="sc r"><div class="sn">3&nbsp;700-3&nbsp;800 $</div><div class="sla">Compte de taxes projeté en 2028</div></div><div class="sc r"><div class="sn">~350 M$</div><div class="sla">Dette projetée en 2028</div></div><div class="sc r"><div class="sn">~120 M$</div><div class="sla">Masse salariale en 2029</div></div><div class="sc r"><div class="sn">>15%</div><div class="sla">Du budget au service de la dette — seuil d'alerte dépassé</div></div></div><p style="margin:0">Les conventions collectives à venir et le service de la dette ne laissent <strong>aucune marge</strong>. Chaque année sans action rend le redressement plus difficile.</p></div>
 
-<!-- FOOTER -->
-<footer>
-  <div class="container">
-    <p style="margin-bottom:0.5rem;">Analyse indépendante — Mars 2026</p>
-    <p style="margin-bottom:0.5rem;">Ce document est préparé dans l'intérêt du contribuable.</p>
-    <p>Chaque dollar dépensé vient de la poche de quelqu'un. Chaque affirmation est appuyée par les rapports financiers audités.</p>
-  </div>
-</footer>
+</div></section>
 
-<!-- SCROLL REVEAL -->
+<section><div class="ct" style="text-align:center"><div class="sl">Méthodologie</div><h2>Sources</h2><hr class="da" style="margin:1rem auto 2rem"><div style="text-align:left;max-width:650px;margin:0 auto;font-size:.85rem;color:var(--muted);line-height:1.8"><p>• Rapports financiers consolidés audités 2020-2024 (déposés au MAMH)<br>• Budgets 2025 et 2026 (adoptés par le conseil)<br>• Sommaires de l'information financière consolidée 2020-2024<br>• Rapports de faits saillants de la mairesse 2021-2024<br>• Profils financiers MAMH (Données Québec)<br>• IPC Québec (Institut de la statistique du Québec)<br>• Étude HEC-CPP 2020 (rémunération municipale)<br>• Le Canada Français, La Presse, Radio-Canada, Noovo Info<br>• sjsr.ca</p></div></div></section>
+
+<footer><div class="ct"><p style="margin-bottom:.5rem">Analyse indépendante — Mars 2026</p><p>Chaque dollar dépensé vient de la poche de quelqu'un. Chaque affirmation est appuyée par les rapports financiers audités.</p></div></footer>
+
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Reveal on scroll
-  const reveals = document.querySelectorAll('.flag-card, .measure, .stat-card, .good-card, .alert, .table-wrap');
-  reveals.forEach(el => el.classList.add('reveal'));
-  
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-  
-  reveals.forEach(el => observer.observe(el));
-
-  // Smooth nav hide/show
-  let lastScroll = 0;
-  const nav = document.querySelector('nav');
-  window.addEventListener('scroll', () => {
-    const current = window.scrollY;
-    if (current > lastScroll && current > 200) {
-      nav.style.transform = 'translateY(-100%)';
-    } else {
-      nav.style.transform = 'translateY(0)';
-    }
-    lastScroll = current;
-  });
-
-  // Close mobile menu on link click
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    a.addEventListener('click', () => {
-      document.getElementById('navLinks').classList.remove('open');
-    });
-  });
-});
+document.addEventListener('DOMContentLoaded',()=>{const e=document.querySelectorAll('.fc,.ms,.sc,.gc,.al,.tw,.cc,.sco,.db,.dt,.ib');e.forEach(x=>x.classList.add('rv'));const o=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vi')})},{threshold:.08,rootMargin:'0px 0px -30px 0px'});e.forEach(x=>o.observe(x));let l=0;const n=document.querySelector('nav');window.addEventListener('scroll',()=>{const c=window.scrollY;if(c>l&&c>200)n.style.transform='translateY(-100%)';else n.style.transform='translateY(0)';l=c});document.querySelectorAll('.nl a').forEach(a=>{a.addEventListener('click',()=>{document.getElementById('nv').classList.remove('op')})})});
 </script>
-
 </body>
 </html>
